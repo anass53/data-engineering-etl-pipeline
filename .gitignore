@@ -2,3 +2,5 @@ logs/
 __pycache__/
 *.pyc
 .env
+dbt_bootcamp/target/
+dbt_bootcamp/dbt_packages/
