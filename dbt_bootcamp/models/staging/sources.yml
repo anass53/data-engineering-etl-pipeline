@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: stg_superstore_sales
+    description: "Staging model for Superstore Sales — colonnes nettoyées et renommées"
+    columns:
+      - name: row_id
+        description: "Identifiant unique de la ligne"
+        tests:
+          - not_null
+          - unique
+
+      - name: order_id
+        description: "Identifiant de la commande"
+        tests:
+          - not_null
+
+      - name: sales
+        description: "Montant des ventes en USD"
+        tests:
+          - not_null
+
+      - name: profit
+        description: "Montant du profit en USD"
+        tests:
+          - not_null
+
+      - name: region
+        description: "Région géographique"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["East", "West", "Central", "South"]
+
+      - name: segment
+        description: "Segment client"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Consumer", "Corporate", "Home Office"]
+
+      - name: category
+        description: "Catégorie produit"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["Furniture", "Office Supplies", "Technology"]
+            

@@ -1,0 +1,34 @@
+version: 2
+
+models:
+  - name: int_sales_by_region
+    description: "Agrégation intermédiaire des ventes par Region et Category"
+    columns:
+      - name: region
+        tests:
+          - not_null
+      - name: category
+        tests:
+          - not_null
+      - name: nb_orders
+        tests:
+          - not_null
+      - name: total_sales
+        tests:
+          - not_null
+      - name: total_profit
+        tests:
+          - not_null
+
+  - name: int_breweries_by_country
+    description: "Agrégation des brasseries par pays et type"
+    columns:
+      - name: country
+        tests:
+          - not_null
+      - name: brewery_type
+        tests:
+          - not_null
+      - name: nb_breweries
+        tests:
+          - not_null

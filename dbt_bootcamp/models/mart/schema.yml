@@ -1,0 +1,46 @@
+version: 2
+
+sources:
+  - name: bootcamp
+    database: bootcamp
+    schema: public
+    tables:
+      - name: superstore_sales
+      - name: breweries
+
+models:
+  - name: mart_sales_performance
+    description: "mart sales_performance — modèle de mart pour l'analyse de la performance des ventes"
+    columns:
+      - name: region
+        description: "Identifiant unique de la ligne"
+        tests:
+          - not_null
+
+      - name: category
+        description: "Identifiant de la commande"
+        tests:
+          - not_null
+
+      - name: profit_margin_pct
+        description: "Pourcentage de marge sur le profit"
+        tests:
+          - not_null
+
+      - name: rank_in_region
+        description: "Classement de la région"
+        tests:
+          - not_null
+
+  - name: mart_breweries_performance
+    description: "KPIs des brasseries par pays et type"
+    columns:
+      - name: country
+        tests:
+          - not_null
+      - name: brewery_type
+        tests:
+          - not_null
+      - name: rank_in_country
+        tests:
+          - not_null

@@ -1,0 +1,12 @@
+dbt_bootcamp:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: postgres_bootcamp
+      port: 5432
+      user: admin
+      password: admin
+      dbname: bootcamp
+      schema: dbt_schema
+      threads: 1

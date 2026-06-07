@@ -1,0 +1,19 @@
+SELECT
+    "order_id",
+  "order_date",
+  "ship_date",
+  "customer_id",
+  "customer_name",
+  "segment",
+  "country",
+  "city",
+  "state",
+  "region",
+  "category",
+  "sub_category",
+  "product_name",
+  "sales",
+  "quantity",
+  "discount",
+  "profit"
+FROM "bootcamp"."dbt_schema"."stg_superstore_sales"

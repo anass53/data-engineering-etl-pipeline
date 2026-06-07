@@ -1,0 +1,197 @@
+[2026-06-07T19:29:03.529+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2026-06-07T19:29:03.613+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: etl_dbt_pipeline.load_to_db scheduled__2026-06-06T00:00:00+00:00 [queued]>
+[2026-06-07T19:29:03.634+0000] {taskinstance.py:2073} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: etl_dbt_pipeline.load_to_db scheduled__2026-06-06T00:00:00+00:00 [queued]>
+[2026-06-07T19:29:03.635+0000] {taskinstance.py:2303} INFO - Starting attempt 1 of 2
+[2026-06-07T19:29:03.884+0000] {taskinstance.py:2327} INFO - Executing <Task(PythonOperator): load_to_db> on 2026-06-06 00:00:00+00:00
+[2026-06-07T19:29:03.896+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=218) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-06-07T19:29:03.898+0000] {standard_task_runner.py:63} INFO - Started process 221 to run task
+[2026-06-07T19:29:03.896+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'etl_dbt_pipeline', 'load_to_db', 'scheduled__2026-06-06T00:00:00+00:00', '--job-id', '6', '--raw', '--subdir', 'DAGS_FOLDER/etl_dbt_pipeline_dag.py', '--cfg-path', '/tmp/tmpch8vi_fx']
+[2026-06-07T19:29:03.902+0000] {standard_task_runner.py:91} INFO - Job 6: Subtask load_to_db
+[2026-06-07T19:29:04.035+0000] {task_command.py:426} INFO - Running <TaskInstance: etl_dbt_pipeline.load_to_db scheduled__2026-06-06T00:00:00+00:00 [running]> on host 8e3e44245596
+[2026-06-07T19:29:04.232+0000] {taskinstance.py:2644} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='anass' AIRFLOW_CTX_DAG_ID='etl_dbt_pipeline' AIRFLOW_CTX_TASK_ID='load_to_db' AIRFLOW_CTX_EXECUTION_DATE='2026-06-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-06-06T00:00:00+00:00'
+[2026-06-07T19:29:04.235+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2026-06-07T19:29:04.270+0000] {data_loader.py:27} INFO - Chargement : /opt/***/data/superstore.csv
+[2026-06-07T19:29:04.456+0000] {data_loader.py:29} INFO - 9994 lignes chargées.
+[2026-06-07T19:29:04.484+0000] {data_loader.py:57} INFO - 0 doublon(s) supprimé(s).
+[2026-06-07T19:29:04.490+0000] {data_loader.py:98} INFO - 0 ligne(s) supprimée(s) contenant des valeurs nulles.
+[2026-06-07T19:29:04.492+0000] {api_loader.py:53} INFO - Récupération page 1...
+[2026-06-07T19:29:04.627+0000] {api_loader.py:67} INFO - 50 enregistrements récupérés.
+[2026-06-07T19:29:05.129+0000] {api_loader.py:53} INFO - Récupération page 2...
+[2026-06-07T19:29:05.525+0000] {api_loader.py:67} INFO - 50 enregistrements récupérés.
+[2026-06-07T19:29:06.027+0000] {api_loader.py:53} INFO - Récupération page 3...
+[2026-06-07T19:29:06.128+0000] {api_loader.py:67} INFO - 50 enregistrements récupérés.
+[2026-06-07T19:29:06.632+0000] {api_loader.py:73} INFO - Total : 150 lignes extraites.
+[2026-06-07T19:29:06.649+0000] {db_loader.py:28} INFO - Connexion PostgreSQL établie.
+[2026-06-07T19:29:07.395+0000] {db_loader.py:47} ERROR - Erreur lors de l'insertion : (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(superstore_sales, 2200) already exists.
+
+[SQL: 
+CREATE TABLE superstore_sales (
+	"Row ID" BIGINT, 
+	"Order ID" TEXT, 
+	"Order Date" TEXT, 
+	"Ship Date" TEXT, 
+	"Ship Mode" TEXT, 
+	"Customer ID" TEXT, 
+	"Customer Name" TEXT, 
+	"Segment" TEXT, 
+	"Country" TEXT, 
+	"City" TEXT, 
+	"State" TEXT, 
+	"Postal Code" BIGINT, 
+	"Region" TEXT, 
+	"Product ID" TEXT, 
+	"Category" TEXT, 
+	"Sub-Category" TEXT, 
+	"Product Name" TEXT, 
+	"Sales" FLOAT(53), 
+	"Quantity" BIGINT, 
+	"Discount" FLOAT(53), 
+	"Profit" FLOAT(53)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2026-06-07T19:29:07.396+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2026-06-07T19:29:07.398+0000] {taskinstance.py:2890} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(superstore_sales, 2200) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 400, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/etl_dbt_pipeline_dag.py", line 65, in load_to_db
+    db.insert(csv_loader.data, table_name="superstore_sales", if_exists="replace")
+  File "/opt/airflow/src/db_loader.py", line 38, in insert
+    df.to_sql(
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/core/generic.py", line 3008, in to_sql
+    return sql.to_sql(
+           ^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 788, in to_sql
+    return pandas_sql.to_sql(
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1948, in to_sql
+    table = self.prep_table(
+            ^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 1852, in prep_table
+    table.create()
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 936, in create
+    self._execute_create()
+  File "/home/airflow/.local/lib/python3.12/site-packages/pandas/io/sql.py", line 922, in _execute_create
+    self.table.create(bind=self.pd_sql.con)
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/sql/schema.py", line 962, in create
+    bind._run_ddl_visitor(ddl.SchemaGenerator, self, checkfirst=checkfirst)
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2221, in _run_ddl_visitor
+    visitorcallable(self.dialect, self, **kwargs).traverse_single(element)
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/sql/visitors.py", line 524, in traverse_single
+    return meth(obj, **kw)
+           ^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py", line 899, in visit_table
+    self.connection.execute(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1385, in execute
+    return meth(self, multiparams, params, _EMPTY_EXECUTION_OPTS)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/sql/ddl.py", line 80, in _execute_on_connection
+    return connection._execute_ddl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1477, in _execute_ddl
+    ret = self._execute_context(
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1953, in _execute_context
+    self._handle_dbapi_exception(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2134, in _handle_dbapi_exception
+    util.raise_(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/util/compat.py", line 211, in raise_
+    raise exception
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 1910, in _execute_context
+    self.dialect.do_execute(
+  File "/home/airflow/.local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 736, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(superstore_sales, 2200) already exists.
+
+[SQL: 
+CREATE TABLE superstore_sales (
+	"Row ID" BIGINT, 
+	"Order ID" TEXT, 
+	"Order Date" TEXT, 
+	"Ship Date" TEXT, 
+	"Ship Mode" TEXT, 
+	"Customer ID" TEXT, 
+	"Customer Name" TEXT, 
+	"Segment" TEXT, 
+	"Country" TEXT, 
+	"City" TEXT, 
+	"State" TEXT, 
+	"Postal Code" BIGINT, 
+	"Region" TEXT, 
+	"Product ID" TEXT, 
+	"Category" TEXT, 
+	"Sub-Category" TEXT, 
+	"Product Name" TEXT, 
+	"Sales" FLOAT(53), 
+	"Quantity" BIGINT, 
+	"Discount" FLOAT(53), 
+	"Profit" FLOAT(53)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+[2026-06-07T19:29:07.513+0000] {taskinstance.py:1205} INFO - Marking task as UP_FOR_RETRY. dag_id=etl_dbt_pipeline, task_id=load_to_db, execution_date=20260606T000000, start_date=20260607T192903, end_date=20260607T192907
+[2026-06-07T19:29:07.557+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 6 for task load_to_db ((psycopg2.errors.UniqueViolation) duplicate key value violates unique constraint "pg_type_typname_nsp_index"
+DETAIL:  Key (typname, typnamespace)=(superstore_sales, 2200) already exists.
+
+[SQL: 
+CREATE TABLE superstore_sales (
+	"Row ID" BIGINT, 
+	"Order ID" TEXT, 
+	"Order Date" TEXT, 
+	"Ship Date" TEXT, 
+	"Ship Mode" TEXT, 
+	"Customer ID" TEXT, 
+	"Customer Name" TEXT, 
+	"Segment" TEXT, 
+	"Country" TEXT, 
+	"City" TEXT, 
+	"State" TEXT, 
+	"Postal Code" BIGINT, 
+	"Region" TEXT, 
+	"Product ID" TEXT, 
+	"Category" TEXT, 
+	"Sub-Category" TEXT, 
+	"Product Name" TEXT, 
+	"Sales" FLOAT(53), 
+	"Quantity" BIGINT, 
+	"Discount" FLOAT(53), 
+	"Profit" FLOAT(53)
+)
+
+]
+(Background on this error at: https://sqlalche.me/e/14/gkpj); 221)
+[2026-06-07T19:29:07.622+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2026-06-07T19:29:07.672+0000] {taskinstance.py:3482} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-06-07T19:29:07.675+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
