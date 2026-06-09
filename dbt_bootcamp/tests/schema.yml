@@ -1,0 +1,10 @@
+version: 2
+
+data_tests:
+  - name: test_no_outliers_sales
+    config:
+      severity: warn
+
+  - name: test_unique_order_product
+    config:
+      severity: warn

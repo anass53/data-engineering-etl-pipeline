@@ -82,6 +82,63 @@ def verify_load(**context):
     assert nb > 0, "❌ Table vide !"
     db.close()
 
+def check_data_volume(**context):
+    """
+    Vérifie la qualité des données dans superstore_sales.
+    """
+
+    db = DbLoader(
+        host="postgres_bootcamp",
+        port=5432,
+        user="admin",
+        password="admin",
+        dbname="bootcamp"
+    )
+    db.connect()
+
+    # 1 — Volume minimum
+    df_count = db.read("SELECT COUNT(*) AS nb FROM superstore_sales")
+    nb_rows = df_count["nb"].values[0]
+
+    assert nb_rows >= 5000, f"❌ Volume insuffisant : {nb_rows} lignes"
+    print(f"✅ Volume OK : {nb_rows}")
+
+    # 2 — Nulls Sales
+    df_nulls = db.read("""
+        SELECT COUNT(*) AS nb
+        FROM superstore_sales
+        WHERE "Sales" IS NULL
+    """)
+    nb_nulls = df_nulls["nb"].values[0]
+
+    assert nb_nulls == 0, f"❌ {nb_nulls} valeurs nulles dans Sales"
+    print("✅ Pas de valeurs nulles")
+
+    # 3 — Sales négatives
+    df_neg = db.read("""
+        SELECT COUNT(*) AS nb
+        FROM superstore_sales
+        WHERE "Sales" < 0
+    """)
+    nb_neg = df_neg["nb"].values[0]
+
+    assert nb_neg == 0, f"❌ {nb_neg} ventes négatives"
+    print("✅ Ventes positives uniquement")
+
+    # 4 — Régions valides
+    df_regions = db.read("""
+        SELECT COUNT(*) AS nb
+        FROM superstore_sales
+        WHERE "Region" NOT IN ('East', 'West', 'Central', 'South')
+    """)
+    nb_invalid = df_regions["nb"].values[0]
+
+    assert nb_invalid == 0, f"❌ {nb_invalid} régions invalides"
+    print("✅ Régions valides")
+
+    db.close()
+    print("✅ Tous les contrôles qualité OK")
+
 # ── DAG ───────────────────────────────────────────────────
 with DAG(
     dag_id="etl_dbt_pipeline",
@@ -116,6 +173,11 @@ with DAG(
         python_callable=verify_load,
     )
 
+    task_quality_check = PythonOperator(
+    task_id="check_data_quality",
+    python_callable=check_data_volume,
+    )
+
     # ── dbt run ───────────────────────────────────────────
     task_dbt_run = BashOperator(
         task_id="dbt_run",
@@ -135,4 +197,4 @@ with DAG(
     )
 
     # ── Dépendances ───────────────────────────────────────
-    [task_extract_csv, task_extract_api] >> task_load_db >> task_verify >> task_dbt_run >> task_dbt_test >> task_notify
+[task_extract_csv, task_extract_api] >> task_load_db >> task_verify >> task_quality_check >> task_dbt_run >> task_dbt_test >> task_notify
